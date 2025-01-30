@@ -1,1 +1,41 @@
+//RIGHT_SHIFT_REG_TB
 
+module r_s_r_tb();
+  reg clk,ld,rst,sin;
+  reg [3:0]i;
+  wire [3:0] q;
+  
+  Right_shift_reg uut (q,i,clk,ld,rst,sin);
+  always
+    begin
+    #5; clk=~clk;
+    end
+  initial
+    begin
+      
+      ld=0;
+      rst=0;
+      i=4'b0000;
+      sin=0;
+      clk=0;
+      
+      rst=1;
+     
+      #5; rst=0; i=4'b1010; ld=1;
+      #5; ld=0; sin=1;
+      #5;
+      #5; rst=0; i=4'b1110; ld=1;
+      #5; ld=0; sin=1;
+     
+    end
+  initial 
+    begin
+       $monitor("Time=%0d: rst=%b, ld=%b, i=%b, sin=%b, q=%b", 
+             $time, rst, ld, i, sin, q);
+    end 
+  initial
+    begin
+      $dumpfile("dump.vcd");
+      $dumpvars(1);
+    end
+endmodule
