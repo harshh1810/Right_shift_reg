@@ -1,0 +1,17 @@
+//RIGHT_SHIFT_REG
+
+module Right_shift_reg (q,i,clk,ld,rst,sin);
+  input clk,ld,rst,sin;
+  input [3:0]i;
+  output reg [3:0] q;
+  
+  always@(posedge clk or posedge rst)
+  begin
+    if(rst)
+      q <= 4'b0000;
+    else if(ld)
+      q <=i;
+    else
+      q <={sin,q[3:1]};
+  end
+endmodule
